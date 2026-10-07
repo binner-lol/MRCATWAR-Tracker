@@ -102,13 +102,40 @@
         function changeResource(resource, amount) {
             resources[resource] += amount;
 
-            // Prevent resources from going below zero
-            if (resources[resource] < 0) {
-                resources[resource] = 0;
+            // Plastic cannot go below 0
+            if (resource === "plastic" && resources.plastic < 0) {
+                resources.plastic = 0;
             }
 
-            document.getElementById(resource).textContent =
-                resources[resource];
+            // Plastic Storage cannot go below 0
+            if (resource === "plasticStorage" && resources.plasticStorage < 0) {
+                resources.plasticStorage = 0;
+            }
+
+            // Plastic cannot exceed Plastic Storage
+            if (resources.plastic > resources.plasticStorage) {
+                resources.plastic = resources.plasticStorage;
+            }
+
+            // Food cannot go below 0
+            if (resource === "food" && resources.food < 0) {
+                resources.food = 0;
+            }
+
+            // Research Points cannot go below 0
+            if (resource === "researchPoints" && resources.researchPoints < 0) {
+                resources.researchPoints = 0;
+            }
+
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            document.getElementById("plastic").textContent = resources.plastic;
+            document.getElementById("plasticStorage").textContent = resources.plasticStorage;
+            document.getElementById("food").textContent = resources.food;
+            document.getElementById("housing").textContent = resources.housing;
+            document.getElementById("researchPoints").textContent = resources.researchPoints;
         }
 
         function resetResources() {
@@ -120,11 +147,7 @@
                 researchPoints: 0
             };
 
-            document.getElementById("plastic").textContent = resources.plastic;
-            document.getElementById("plasticStorage").textContent = resources.plasticStorage;
-            document.getElementById("food").textContent = resources.food;
-            document.getElementById("housing").textContent = resources.housing;
-            document.getElementById("researchPoints").textContent = resources.researchPoints;
+            updateDisplay();
         }
     </script>
 
