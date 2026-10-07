@@ -1,7 +1,8 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Board Game Resource Tracker</title>
+    <title>Mr C At War Resource Tracker</title>
 
     <style>
         body {
@@ -35,10 +36,16 @@
 
         button {
             font-size: 24px;
-            width: 50px;
+            min-width: 50px;
             height: 45px;
             margin: 5px;
             cursor: pointer;
+        }
+
+        select {
+            font-size: 18px;
+            padding: 8px;
+            margin: 5px;
         }
 
         .reset {
@@ -53,39 +60,80 @@
 
     <h1>Board Game Resource Tracker</h1>
 
+    <!-- Plastic -->
     <div class="resource">
         <h2>Plastic</h2>
         <div class="amount" id="plastic">0</div>
+
         <button onclick="changeResource('plastic', -1)">−</button>
         <button onclick="changeResource('plastic', 1)">+</button>
     </div>
 
+    <!-- Plastic Storage -->
     <div class="resource">
         <h2>Plastic Storage</h2>
         <div class="amount" id="plasticStorage">0</div>
+
         <button onclick="changeResource('plasticStorage', -1)">−</button>
         <button onclick="changeResource('plasticStorage', 1)">+</button>
     </div>
 
+    <!-- Food -->
     <div class="resource">
         <h2>Food</h2>
         <div class="amount" id="food">5</div>
+
         <button onclick="changeResource('food', -1)">−</button>
         <button onclick="changeResource('food', 1)">+</button>
     </div>
 
+    <!-- Housing -->
     <div class="resource">
         <h2>Housing</h2>
         <div class="amount" id="housing">10</div>
-        <button onclick="changeResource('housing', -1)">−</button>
-        <button onclick="changeResource('housing', 1)">+</button>
+
+        <select id="housingAmount">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="5">5</option>
+        </select>
+
+        <br>
+
+        <button onclick="changeSelectedResource('housing', -1, 'housingAmount')">
+            −
+        </button>
+
+        <button onclick="changeSelectedResource('housing', 1, 'housingAmount')">
+            +
+        </button>
     </div>
 
+    <!-- Research Points -->
     <div class="resource">
         <h2>Research Points</h2>
         <div class="amount" id="researchPoints">0</div>
-        <button onclick="changeResource('researchPoints', -1)">−</button>
-        <button onclick="changeResource('researchPoints', 1)">+</button>
+
+        <select id="researchAmount">
+            <option value="2">2</option>
+            <option value="5">5</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="400">400</option>
+        </select>
+
+        <br>
+
+        <button onclick="changeSelectedResource('researchPoints', -1, 'researchAmount')">
+            −
+        </button>
+
+        <button onclick="changeSelectedResource('researchPoints', 1, 'researchAmount')">
+            +
+        </button>
     </div>
 
     <button class="reset" onclick="resetResources()">Reset Game</button>
@@ -112,11 +160,6 @@
                 resources.plasticStorage = 0;
             }
 
-            // Plastic cannot exceed Plastic Storage
-            if (resources.plastic > resources.plasticStorage) {
-                resources.plastic = resources.plasticStorage;
-            }
-
             // Food cannot go below 0
             if (resource === "food" && resources.food < 0) {
                 resources.food = 0;
@@ -127,29 +170,24 @@
                 resources.researchPoints = 0;
             }
 
-            updateDisplay();
-        }
-
-        function updateDisplay() {
-            document.getElementById("plastic").textContent = resources.plastic;
-            document.getElementById("plasticStorage").textContent = resources.plasticStorage;
-            document.getElementById("food").textContent = resources.food;
-            document.getElementById("housing").textContent = resources.housing;
-            document.getElementById("researchPoints").textContent = resources.researchPoints;
-        }
-
-        function resetResources() {
-            resources = {
-                plastic: 0,
-                plasticStorage: 0,
-                food: 5,
-                housing: 10,
-                researchPoints: 0
-            };
+            // Plastic cannot exceed Plastic Storage
+            if (resources.plastic > resources.plasticStorage) {
+                resources.plastic = resources.plasticStorage;
+            }
 
             updateDisplay();
         }
-    </script>
 
-</body>
-</html>
+        function changeSelectedResource(resource, direction, selectId) {
+            const amount = Number(document.getElementById(selectId).value);
+
+            resources[resource] += amount * direction;
+
+            // Research Points cannot go below 0
+            if (resource === "researchPoints" && resources.researchPoints < 0) {
+                resources.researchPoints = 0;
+            }
+
+            // Plastic cannot exceed Plastic Storage
+            if (resources.plastic > resources.plasticStorage)
+```
