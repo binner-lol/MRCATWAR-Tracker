@@ -1,0 +1,20 @@
+<body>
+
+    <h1>Resource Tracker</h1>
+
+    <h2>Food: <span id="wood">10</span></h2>
+
+    <button onclick="changeWood(-1)">−</button>
+    <button onclick="changeWood(1)">+</button>
+
+    <script>
+        let wood = 10;
+
+        function changeWood(amount) {
+            wood += amount;
+            document.getElementById("wood").textContent = wood;
+        }
+    </script>
+
+</body>
+</html>
