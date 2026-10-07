@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +57,7 @@
 
 <body>
 
-    <h1>Board Game Resource Tracker</h1>
+    <h1>Mr C At War Resource Tracker</h1>
 
     <!-- Plastic -->
     <div class="resource">
@@ -189,5 +188,42 @@
             }
 
             // Plastic cannot exceed Plastic Storage
-            if (resources.plastic > resources.plasticStorage)
-```
+            if (resources.plastic > resources.plasticStorage) {
+                resources.plastic = resources.plasticStorage;
+            }
+
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            document.getElementById("plastic").textContent =
+                resources.plastic;
+
+            document.getElementById("plasticStorage").textContent =
+                resources.plasticStorage;
+
+            document.getElementById("food").textContent =
+                resources.food;
+
+            document.getElementById("housing").textContent =
+                resources.housing;
+
+            document.getElementById("researchPoints").textContent =
+                resources.researchPoints;
+        }
+
+        function resetResources() {
+            resources = {
+                plastic: 0,
+                plasticStorage: 0,
+                food: 5,
+                housing: 10,
+                researchPoints: 0
+            };
+
+            updateDisplay();
+        }
+    </script>
+
+</body>
+</html>
