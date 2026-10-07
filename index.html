@@ -64,17 +64,30 @@
         <h2>Plastic</h2>
         <div class="amount" id="plastic">0</div>
 
-        <button onclick="changeResource('plastic', -1)">−</button>
-        <button onclick="changeResource('plastic', 1)">+</button>
+        <select id="plasticAmount">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+        <br>
+
+        <button onclick="changeSelectedResource('plastic', -1, 'plasticAmount')">
+            −
+        </button>
+
+        <button onclick="changeSelectedResource('plastic', 1, 'plasticAmount')">
+            +
+        </button>
     </div>
 
     <!-- Plastic Storage -->
     <div class="resource">
         <h2>Plastic Storage</h2>
-        <div class="amount" id="plasticStorage">0</div>
+        <div class="amount" id="plasticStorage">10</div>
 
-        <button onclick="changeResource('plasticStorage', -1)">−</button>
-        <button onclick="changeResource('plasticStorage', 1)">+</button>
+        <button onclick="changeResource('plasticStorage', -5)">−</button>
+        <button onclick="changeResource('plasticStorage', 5)">+</button>
     </div>
 
     <!-- Food -->
@@ -140,7 +153,7 @@
     <script>
         let resources = {
             plastic: 0,
-            plasticStorage: 0,
+            plasticStorage: 10,
             food: 5,
             housing: 10,
             researchPoints: 0
@@ -178,9 +191,16 @@
         }
 
         function changeSelectedResource(resource, direction, selectId) {
-            const amount = Number(document.getElementById(selectId).value);
+            const amount = Number(
+                document.getElementById(selectId).value
+            );
 
             resources[resource] += amount * direction;
+
+            // Plastic cannot go below 0
+            if (resource === "plastic" && resources.plastic < 0) {
+                resources.plastic = 0;
+            }
 
             // Research Points cannot go below 0
             if (resource === "researchPoints" && resources.researchPoints < 0) {
@@ -215,7 +235,7 @@
         function resetResources() {
             resources = {
                 plastic: 0,
-                plasticStorage: 0,
+                plasticStorage: 10,
                 food: 5,
                 housing: 10,
                 researchPoints: 0
