@@ -1,18 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Board Game Resource Tracker</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .resource {
+            background-color: white;
+            max-width: 400px;
+            margin: 15px auto;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .resource h2 {
+            margin: 0 0 10px;
+        }
+
+        .amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px;
+        }
+
+        button {
+            font-size: 24px;
+            width: 50px;
+            height: 45px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .reset {
+            width: 150px;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
 <body>
 
-    <h1>Resource Tracker</h1>
+    <h1>Board Game Resource Tracker</h1>
 
-    <h2>Food: <span id="wood">10</span></h2>
+    <div class="resource">
+        <h2>Plastic</h2>
+        <div class="amount" id="plastic">0</div>
+        <button onclick="changeResource('plastic', -1)">−</button>
+        <button onclick="changeResource('plastic', 1)">+</button>
+    </div>
 
-    <button onclick="changeWood(-1)">−</button>
-    <button onclick="changeWood(1)">+</button>
+    <div class="resource">
+        <h2>Plastic Storage</h2>
+        <div class="amount" id="plasticStorage">0</div>
+        <button onclick="changeResource('plasticStorage', -1)">−</button>
+        <button onclick="changeResource('plasticStorage', 1)">+</button>
+    </div>
+
+    <div class="resource">
+        <h2>Food</h2>
+        <div class="amount" id="food">5</div>
+        <button onclick="changeResource('food', -1)">−</button>
+        <button onclick="changeResource('food', 1)">+</button>
+    </div>
+
+    <div class="resource">
+        <h2>Housing</h2>
+        <div class="amount" id="housing">10</div>
+        <button onclick="changeResource('housing', -1)">−</button>
+        <button onclick="changeResource('housing', 1)">+</button>
+    </div>
+
+    <div class="resource">
+        <h2>Research Points</h2>
+        <div class="amount" id="researchPoints">0</div>
+        <button onclick="changeResource('researchPoints', -1)">−</button>
+        <button onclick="changeResource('researchPoints', 1)">+</button>
+    </div>
+
+    <button class="reset" onclick="resetResources()">Reset Game</button>
 
     <script>
-        let wood = 10;
+        let resources = {
+            plastic: 0,
+            plasticStorage: 0,
+            food: 5,
+            housing: 10,
+            researchPoints: 0
+        };
 
-        function changeWood(amount) {
-            wood += amount;
-            document.getElementById("wood").textContent = wood;
+        function changeResource(resource, amount) {
+            resources[resource] += amount;
+
+            // Prevent resources from going below zero
+            if (resources[resource] < 0) {
+                resources[resource] = 0;
+            }
+
+            document.getElementById(resource).textContent =
+                resources[resource];
+        }
+
+        function resetResources() {
+            resources = {
+                plastic: 0,
+                plasticStorage: 0,
+                food: 5,
+                housing: 10,
+                researchPoints: 0
+            };
+
+            document.getElementById("plastic").textContent = resources.plastic;
+            document.getElementById("plasticStorage").textContent = resources.plasticStorage;
+            document.getElementById("food").textContent = resources.food;
+            document.getElementById("housing").textContent = resources.housing;
+            document.getElementById("researchPoints").textContent = resources.researchPoints;
         }
     </script>
 
