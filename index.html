@@ -93,10 +93,23 @@
     <!-- Food -->
     <div class="resource">
         <h2>Food</h2>
-        <div class="amount" id="food">5</div>
+        <div class="amount" id="food">0</div>
 
-        <button onclick="changeResource('food', -1)">−</button>
-        <button onclick="changeResource('food', 1)">+</button>
+        <select id="foodAmount">
+            <option value="1">1</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+        </select>
+
+        <br>
+
+        <button onclick="changeSelectedResource('food', -1, 'foodAmount')">
+            −
+        </button>
+
+        <button onclick="changeSelectedResource('food', 1, 'foodAmount')">
+            +
+        </button>
     </div>
 
     <!-- Housing -->
